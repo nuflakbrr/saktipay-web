@@ -16,15 +16,6 @@ const firebaseConfig = {
   appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
   measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID
 };
-// const firebaseConfig = {
-//   apiKey: "AIzaSyDbzjfGkUzUohtdqnFAUIR2ziZQgUbI39o",
-//   authDomain: "saktipay-f94f8.firebaseapp.com",
-//   projectId: "saktipay-f94f8",
-//   storageBucket: "saktipay-f94f8.firebasestorage.app",
-//   messagingSenderId: "414338201746",
-//   appId: "1:414338201746:web:7765734f5564c779018e4b",
-//   measurementId: "G-FSZ5EK1YGX"
-// };
 
 // Initialize Firebase
 const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
