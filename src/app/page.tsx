@@ -33,7 +33,7 @@ const AuthPage: FC = () => {
         <CardFooter className="flex-col gap-2">
           <Button variant="outline" className="w-full" onClick={signIn}>
             <GoogleIcon />
-            Login with Google
+            Masuk menggunakan Google
           </Button>
         </CardFooter>
       </Card>
