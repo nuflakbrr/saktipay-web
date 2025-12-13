@@ -2,7 +2,6 @@ export const navLinkAdmin = {
   navMain: [
     {
       title: "Halaman Utama",
-      url: "#",
       items: [
         {
           title: "Dashboard",
@@ -16,37 +15,35 @@ export const navLinkAdmin = {
     },
     {
       title: "Master Data",
-      url: "#",
       items: [
         {
           title: "Toko",
-          url: "/stores",
+          url: "/master/stores",
         },
         {
           title: "Kategori Produk",
-          url: "/categories",
+          url: "/master/categories",
         },
         {
           title: "Supplier",
-          url: "/suppliers",
+          url: "/master/suppliers",
         },
         {
           title: "Produk",
-          url: "/products",
+          url: "/master/products",
         },
         {
           title: "Promo",
-          url: "/promos",
+          url: "/master/promos",
         },
         {
           title: "Pegawai",
-          url: "/employees",
+          url: "/master/employees",
         },
       ],
     },
     {
       title: "Penjualan",
-      url: "#",
       items: [
         {
           title: "Point of Sales",
