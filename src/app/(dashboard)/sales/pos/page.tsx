@@ -218,7 +218,7 @@ const PointOfSalesPage: FC = () => {
             )}
 
             {filteredProducts.map(product => (
-              <Card key={product.id} className='h-auto' onClick={() => addToCart(product)}>
+              <Card key={product.id} className='h-auto cursor-pointer' onClick={() => addToCart(product)}>
                 <CardHeader>
                   <CardTitle>{product.name}</CardTitle>
                   <CardDescription>Stock: {product.stock}</CardDescription>
