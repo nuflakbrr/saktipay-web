@@ -1,16 +1,7 @@
 'use client';
 
 import { FC, useState } from 'react';
-import {
-  collection,
-  doc,
-  updateDoc,
-  deleteDoc,
-  query,
-  where,
-  getDocs,
-  serverTimestamp,
-} from 'firebase/firestore';
+import { collection, doc, updateDoc, deleteDoc, query, where, getDocs, serverTimestamp } from 'firebase/firestore';
 import { Copy, Edit, MoreHorizontal, Trash } from 'lucide-react';
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
