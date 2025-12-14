@@ -148,8 +148,6 @@ const PointOfSalesPage: FC = () => {
         }
       });
 
-      console.log('TRANSACTION SAVED', transaction)
-
       // RESET STATE
       setCart([])
       setSelectedVoucher(null)
@@ -157,7 +155,6 @@ const PointOfSalesPage: FC = () => {
 
       toast.success('Transaksi berhasil dibuat')
     } catch (error) {
-      console.error('PAYMENT FAILED', error)
       toast.error('Gagal membuat transaksi')
     }
   }

@@ -119,7 +119,6 @@ const PromotionsPage: FC = () => {
       if (promotions) setData(promotions)
 
     } catch (error) {
-      console.error(error)
       toast.error("Gagal membuat promo")
     }
   }

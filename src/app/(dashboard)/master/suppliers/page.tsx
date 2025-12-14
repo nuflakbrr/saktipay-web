@@ -92,7 +92,6 @@ const SuppliersPage: FC = () => {
       if (suppliers) setData(suppliers)
 
     } catch (error) {
-      console.error(error)
       toast.error("Gagal membuat supplier")
     }
   }

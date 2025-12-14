@@ -143,7 +143,6 @@ const PromotionCellAction: FC<Props> = ({ data }) => {
       // simple refresh
       window.location.reload();
     } catch (error) {
-      console.error(error);
       toast.error("Gagal memperbarui promo");
     } finally {
       setLoading(false);
@@ -160,7 +159,6 @@ const PromotionCellAction: FC<Props> = ({ data }) => {
       toast.success("Promo berhasil dihapus");
       window.location.reload();
     } catch (error) {
-      console.error(error);
       toast.error("Gagal menghapus promo");
     } finally {
       setLoading(false);

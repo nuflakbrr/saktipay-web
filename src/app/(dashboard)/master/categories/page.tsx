@@ -76,7 +76,6 @@ const CategoriesPage: FC = () => {
       if (categories) setData(categories)
 
     } catch (error) {
-      console.error(error)
       toast.error("Gagal membuat kategori produk")
     }
   }

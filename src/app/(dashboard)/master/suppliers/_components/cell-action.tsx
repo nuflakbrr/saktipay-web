@@ -117,7 +117,6 @@ const SupplierCellAction: FC<Props> = ({ data }) => {
       // simple refresh
       window.location.reload();
     } catch (error) {
-      console.error(error);
       toast.error("Gagal memperbarui supplier");
     } finally {
       setLoading(false);
@@ -134,7 +133,6 @@ const SupplierCellAction: FC<Props> = ({ data }) => {
       toast.success("Supplier berhasil dihapus");
       window.location.reload();
     } catch (error) {
-      console.error(error);
       toast.error("Gagal menghapus supplier");
     } finally {
       setLoading(false);

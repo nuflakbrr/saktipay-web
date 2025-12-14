@@ -99,7 +99,6 @@ const CategoryCellAction: FC<Props> = ({ data }) => {
       // simple refresh
       window.location.reload();
     } catch (error) {
-      console.error(error);
       toast.error("Gagal memperbarui kategori");
     } finally {
       setLoading(false);
@@ -116,7 +115,6 @@ const CategoryCellAction: FC<Props> = ({ data }) => {
       toast.success("Kategori berhasil dihapus");
       window.location.reload();
     } catch (error) {
-      console.error(error);
       toast.error("Gagal menghapus kategori");
     } finally {
       setLoading(false);

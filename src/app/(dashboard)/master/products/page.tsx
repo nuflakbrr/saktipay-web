@@ -113,7 +113,6 @@ const ProductsPage: FC = () => {
       if (products) setData(products)
 
     } catch (error) {
-      console.error(error)
       toast.error("Gagal membuat produk")
     }
   }

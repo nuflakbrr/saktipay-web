@@ -152,7 +152,6 @@ const ProductCellAction: FC<Props> = ({ data }) => {
       // simple refresh
       window.location.reload();
     } catch (error) {
-      console.error(error);
       toast.error("Gagal memperbarui produk");
     } finally {
       setLoading(false);
@@ -169,7 +168,6 @@ const ProductCellAction: FC<Props> = ({ data }) => {
       toast.success("Produk berhasil dihapus");
       window.location.reload();
     } catch (error) {
-      console.error(error);
       toast.error("Gagal menghapus produk");
     } finally {
       setLoading(false);
