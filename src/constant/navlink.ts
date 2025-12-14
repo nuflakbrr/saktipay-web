@@ -17,7 +17,7 @@ export const navLinkAdmin = {
       title: "Master Data",
       items: [
         {
-          title: "Toko",
+          title: "Profil Toko",
           url: "/master/stores",
         },
         {

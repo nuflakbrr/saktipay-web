@@ -1,12 +1,13 @@
 'use client'
 import { FC, useEffect } from 'react'
-import { doc, getDoc, serverTimestamp, updateDoc } from 'firebase/firestore'
+import { doc, serverTimestamp, updateDoc } from 'firebase/firestore'
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Controller, useForm } from "react-hook-form"
 import { toast } from "sonner"
 import z from "zod"
 
 import { db } from '@/lib/firebase'
+import { fetchStore, STORE_ID } from '@/services/stores'
 import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
 import { Field, FieldError, FieldGroup, FieldLabel } from '@/components/ui/field'
@@ -18,16 +19,16 @@ const StorePage: FC = () => {
   const formSchema = z.object({
     name: z
       .string()
-      .min(5, "Bug title must be at least 5 characters.")
-      .max(32, "Bug title must be at most 32 characters."),
+      .min(5, "Nama Toko setidaknya harus memiliki 5 karakter.")
+      .max(32, "Nama Toko maksimal 32 karakter."),
     address: z
       .string()
-      .min(20, "Description must be at least 20 characters.")
-      .max(100, "Description must be at most 100 characters."),
+      .min(20, "Alamat harus memiliki setidaknya 20 karakter.")
+      .max(100, "Alamat maksimal 100 karakter."),
     phone: z
       .string()
-      .min(10, "Phone number must be at least 10 characters.")
-      .max(15, "Phone number must be at most 15 characters."),
+      .min(10, "Nomor telepon harus memiliki setidaknya 10 karakter.")
+      .max(15, "Nomor telepon maksimal 15 karakter."),
   })
 
   type FormSchema = z.infer<typeof formSchema>
@@ -40,8 +41,6 @@ const StorePage: FC = () => {
       phone: "",
     },
   })
-
-  const STORE_ID = "deNG3hFw3SLqctWt04D8"
 
   async function onSubmit(data: FormSchema) {
     try {
@@ -57,34 +56,12 @@ const StorePage: FC = () => {
 
       toast.success("Profil toko berhasil diperbarui")
     } catch (error) {
-      console.error(error)
       toast.error("Gagal memperbarui data toko")
     }
   }
 
-
   useEffect(() => {
-    const fetchStore = async () => {
-      try {
-        const storeRef = doc(db, "stores", STORE_ID)
-        const snapshot = await getDoc(storeRef)
-
-        if (snapshot.exists()) {
-          const data = snapshot.data()
-
-          form.setValue("name", data.name ?? "")
-          form.setValue("address", data.address ?? "")
-          form.setValue("phone", data.phone ?? "")
-        } else {
-          toast.error("Data toko tidak ditemukan")
-        }
-      } catch (error) {
-        console.error(error)
-        toast.error("Gagal mengambil data toko")
-      }
-    }
-
-    fetchStore()
+    fetchStore(form)
   }, [form])
 
   return (
