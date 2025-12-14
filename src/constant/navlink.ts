@@ -43,11 +43,11 @@ export const navLinkAdmin = {
       ],
     },
     {
-      title: "Penjualan",
+      title: "Point of Sales",
       items: [
         {
-          title: "Point of Sales",
-          url: "/pos",
+          title: "Transaksi",
+          url: "/sales/pos",
         },
       ],
     },
@@ -58,7 +58,6 @@ export const navLinkCashier = {
   navMain: [
     {
       title: "Halaman Utama",
-      url: "#",
       items: [
         {
           title: "Dashboard",
@@ -71,12 +70,11 @@ export const navLinkCashier = {
       ],
     },
     {
-      title: "Penjualan",
-      url: "#",
+      title: "Point of Sales",
       items: [
         {
-          title: "Point of Sales",
-          url: "/pos",
+          title: "Transaksi",
+          url: "/sales/pos",
         },
       ],
     },
