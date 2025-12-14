@@ -85,7 +85,7 @@ const CategoryCellAction: FC<Props> = ({ data }) => {
     try {
       setLoading(true);
 
-      const name = formData.name.trim().toLowerCase();
+      const name = formData.name.trim();
 
       // cek duplicate (kecuali dirinya sendiri)
       const q = query(
