@@ -78,12 +78,13 @@ export default function Layout({ children }: Props) {
                 {segments.map((segment, index) => {
                   const href = "/" + segments.slice(0, index + 1).join("/")
                   const isLast = index === segments.length - 1
+                  const isVirtualParent = href === "/master" || href === "/sales"
 
                   return (
                     <Fragment key={href}>
                       <BreadcrumbSeparator />
                       <BreadcrumbItem>
-                        {isLast ? (
+                        {isLast || isVirtualParent ? (
                           <BreadcrumbPage>
                             {getLabel(href, segment)}
                           </BreadcrumbPage>
