@@ -106,7 +106,7 @@ const CategoriesPage: FC = () => {
       <DataTable searchKey="name" columns={CategoryColumns} data={data} />
 
       <Modal isOpen={open} onClose={handleOpenModal} title='Buat Kategori Baru' description='Buat kategori baru untuk produk toko Anda.'>
-        <form id="form-store" onSubmit={form.handleSubmit(onSubmit)}>
+        <form id="form-category" onSubmit={form.handleSubmit(onSubmit)}>
           <FieldGroup>
             <Controller
               name="name"
@@ -131,7 +131,7 @@ const CategoriesPage: FC = () => {
             />
 
             <div className="flex items-center justify-end">
-              <Button type="submit" form="form-store" className='w-auto'>
+              <Button type="submit" form="form-category" className='w-auto'>
                 Simpan
               </Button>
             </div>

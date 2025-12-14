@@ -1,23 +1,14 @@
 'use client';
 
 import { FC, useState } from 'react';
-import {
-  collection,
-  doc,
-  updateDoc,
-  deleteDoc,
-  query,
-  where,
-  getDocs,
-  serverTimestamp,
-} from 'firebase/firestore';
+import { collection, doc, updateDoc, deleteDoc, query, where, getDocs, serverTimestamp } from 'firebase/firestore';
 import { Copy, Edit, MoreHorizontal, Trash } from 'lucide-react';
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
 import { toast } from 'sonner';
 import z from "zod";
 
-import { Category } from '@/interfaces/categories';
+import { Supplier } from '@/interfaces/suppliers';
 import { db } from '@/lib/firebase';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { Field, FieldError, FieldGroup, FieldLabel } from '@/components/ui/field';
@@ -25,12 +16,13 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import Modal from '@/components/Common/Modals/Modal';
 import AlertModal from '@/components/Common/Modals/AlertModal';
+import { InputGroup, InputGroupAddon, InputGroupText, InputGroupTextarea } from '@/components/ui/input-group';
 
 type Props = {
-  data: Category;
+  data: Supplier;
 };
 
-const CategoryCellAction: FC<Props> = ({ data }) => {
+const SupplierCellAction: FC<Props> = ({ data }) => {
   /* =======================
      STATE
   ======================== */
@@ -44,8 +36,16 @@ const CategoryCellAction: FC<Props> = ({ data }) => {
   const formSchema = z.object({
     name: z
       .string()
-      .min(5, "Nama kategori setidaknya harus 5 karakter.")
-      .max(32, "Nama kategori maksimal 32 karakter."),
+      .min(5, "Nama supplier setidaknya harus 5 karakter.")
+      .max(32, "Nama supplier maksimal 32 karakter."),
+    address: z
+      .string()
+      .min(20, "Alamat supplier harus memiliki setidaknya 20 karakter.")
+      .max(100, "Alamat supplier maksimal 100 karakter."),
+    contact: z
+      .string()
+      .min(10, "Nomor telepon supplier harus memiliki setidaknya 10 karakter.")
+      .max(15, "Nomor telepon supplier maksimal 15 karakter."),
   });
 
   type FormSchema = z.infer<typeof formSchema>;
@@ -54,6 +54,8 @@ const CategoryCellAction: FC<Props> = ({ data }) => {
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: "",
+      address: "",
+      contact: "",
     },
   });
 
@@ -63,27 +65,32 @@ const CategoryCellAction: FC<Props> = ({ data }) => {
 
   const handleEditOpen = () => {
     form.setValue("name", data.name);
+    form.setValue("address", data.address);
+    form.setValue("contact", data.contact);
     setOpenEdit(true);
   };
 
   const handleCopy = (id: string) => {
     navigator.clipboard.writeText(id);
-    toast.success("Category ID berhasil disalin");
+    toast.success("Supplier ID berhasil disalin");
   };
 
   /* =======================
-     UPDATE CATEGORY
+     UPDATE SUPPLIER
   ======================== */
   const onSubmit = async (formData: FormSchema) => {
     try {
       setLoading(true);
 
       const name = formData.name.trim();
+      const address = formData.address.trim();
+      const contact = formData.contact.trim();
 
       // cek duplicate (kecuali dirinya sendiri)
       const q = query(
-        collection(db, "categories"),
-        where("name", "==", name)
+        collection(db, "suppliers"),
+        where("name", "==", name),
+        where("contact", "==", contact)
       );
 
       const snapshot = await getDocs(q);
@@ -92,16 +99,18 @@ const CategoryCellAction: FC<Props> = ({ data }) => {
       );
 
       if (isDuplicate) {
-        toast.error("Nama kategori sudah digunakan");
+        toast.error("Nama supplier sudah digunakan");
         return;
       }
 
-      await updateDoc(doc(db, "categories", data.id), {
+      await updateDoc(doc(db, "suppliers", data.id), {
         name,
+        address,
+        contact,
         updated_at: serverTimestamp(),
       });
 
-      toast.success("Kategori berhasil diperbarui");
+      toast.success("Supplier berhasil diperbarui");
       setOpenEdit(false);
       form.reset();
 
@@ -109,7 +118,7 @@ const CategoryCellAction: FC<Props> = ({ data }) => {
       window.location.reload();
     } catch (error) {
       console.error(error);
-      toast.error("Gagal memperbarui kategori");
+      toast.error("Gagal memperbarui supplier");
     } finally {
       setLoading(false);
     }
@@ -121,12 +130,12 @@ const CategoryCellAction: FC<Props> = ({ data }) => {
   const onConfirmDelete = async () => {
     try {
       setLoading(true);
-      await deleteDoc(doc(db, "categories", data.id));
-      toast.success("Kategori berhasil dihapus");
+      await deleteDoc(doc(db, "suppliers", data.id));
+      toast.success("Supplier berhasil dihapus");
       window.location.reload();
     } catch (error) {
       console.error(error);
-      toast.error("Gagal menghapus kategori");
+      toast.error("Gagal menghapus supplier");
     } finally {
       setLoading(false);
       setOpenDelete(false);
@@ -179,8 +188,8 @@ const CategoryCellAction: FC<Props> = ({ data }) => {
       <Modal
         isOpen={openEdit}
         onClose={() => setOpenEdit(false)}
-        title="Ubah Kategori"
-        description="Ubah kategori untuk produk toko Anda."
+        title="Ubah Supplier"
+        description="Ubah supplier untuk produk toko Anda."
       >
         <form onSubmit={form.handleSubmit(onSubmit)}>
           <FieldGroup>
@@ -190,13 +199,65 @@ const CategoryCellAction: FC<Props> = ({ data }) => {
               render={({ field, fieldState }) => (
                 <Field data-invalid={fieldState.invalid}>
                   <FieldLabel htmlFor="form-name">
-                    Nama Kategori Produk
+                    Nama Supplier
                   </FieldLabel>
                   <Input
                     {...field}
                     id="form-name"
                     aria-invalid={fieldState.invalid}
-                    placeholder="Nama kategori"
+                    placeholder="Nama Supplier Anda"
+                    autoComplete="off"
+                  />
+                  {fieldState.invalid && (
+                    <FieldError errors={[fieldState.error]} />
+                  )}
+                </Field>
+              )}
+            />
+
+            <Controller
+              name="address"
+              control={form.control}
+              render={({ field, fieldState }) => (
+                <Field data-invalid={fieldState.invalid}>
+                  <FieldLabel htmlFor="form-address">
+                    Alamat Supplier
+                  </FieldLabel>
+                  <InputGroup>
+                    <InputGroupTextarea
+                      {...field}
+                      id="form-address"
+                      placeholder="Alamat Supplier Anda"
+                      rows={6}
+                      className="min-h-24 resize-none"
+                      aria-invalid={fieldState.invalid}
+                    />
+                    <InputGroupAddon align="block-end">
+                      <InputGroupText className="tabular-nums">
+                        {field.value.length}/100 characters
+                      </InputGroupText>
+                    </InputGroupAddon>
+                  </InputGroup>
+                  {fieldState.invalid && (
+                    <FieldError errors={[fieldState.error]} />
+                  )}
+                </Field>
+              )}
+            />
+
+            <Controller
+              name="contact"
+              control={form.control}
+              render={({ field, fieldState }) => (
+                <Field data-invalid={fieldState.invalid}>
+                  <FieldLabel htmlFor="form-phone">
+                    Nomor Telepon
+                  </FieldLabel>
+                  <Input
+                    {...field}
+                    id="form-phone"
+                    aria-invalid={fieldState.invalid}
+                    placeholder="Nomor Telepon Supplier Anda"
                     autoComplete="off"
                   />
                   {fieldState.invalid && (
@@ -218,4 +279,4 @@ const CategoryCellAction: FC<Props> = ({ data }) => {
   );
 };
 
-export default CategoryCellAction;
+export default SupplierCellAction;
