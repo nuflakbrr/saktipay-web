@@ -43,7 +43,7 @@ const CategoriesPage: FC = () => {
 
   async function onSubmit(formData: FormSchema) {
     try {
-      const name = formData.name.trim().toLowerCase()
+      const name = formData.name.trim()
 
       // 1. cek apakah nama kategori sudah ada
       const q = query(
@@ -93,8 +93,8 @@ const CategoriesPage: FC = () => {
     <>
       <div className="flex items-center justify-between">
         <Heading
-          title="Profil Toko"
-          description="Kelola informasi toko Anda"
+          title="Kategori Produk"
+          description="Kelola kategori produk toko Anda"
         />
         <Button onClick={handleOpenModal}>
           <Plus className="mr-2 h-4 w-4" /> Buat Kategori Baru
