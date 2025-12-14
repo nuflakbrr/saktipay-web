@@ -301,8 +301,9 @@ const PointOfSalesPage: FC = () => {
                 <span>Kupon Voucher</span>
               </div>
               <button
+                disabled={promotions.length === 0 || cart.length === 0}
                 onClick={handleVoucherModal}
-                className={`text-xs px-2 py-1 rounded border ${selectedVoucher ? 'bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 border-green-200 dark:border-green-800' : 'bg-white dark:bg-neutral-700 text-neutral-500 dark:text-neutral-300 hover:bg-neutral-50 dark:hover:bg-neutral-600 border-neutral-200 dark:border-neutral-600 cursor-pointer'}`}
+                className={cn(cart.length === 0 ? "cursor-not-allowed" : "cursor-pointer", selectedVoucher ? 'bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 border-green-200 dark:border-green-800' : 'bg-white dark:bg-neutral-700 text-neutral-500 dark:text-neutral-300 hover:bg-neutral-50 dark:hover:bg-neutral-600 border-neutral-200 dark:border-neutral-600', "text-xs px-2 py-1 rounded border")}
               >
                 {selectedVoucher ? selectedVoucher.code : 'Pilih Kupon...'}
               </button>
