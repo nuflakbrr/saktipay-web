@@ -20,6 +20,7 @@ import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import VoucherModal from './_components/voucher';
 import PaymentModal from './_components/payment';
+import ReceiptModal from './_components/receipt';
 
 const PointOfSalesPage: FC = () => {
   const { user } = useAuth()
@@ -34,6 +35,8 @@ const PointOfSalesPage: FC = () => {
   const [search, setSearchTerm] = useState<string>('')
   const [cart, setCart] = useState<Cart[]>([])
   const [isPaymentModalOpen, setIsPaymentModalOpen] = useState<boolean>(false)
+  const [lastTransactionId, setLastTransactionId] = useState<string | null>(null)
+  const [isReceiptModalOpen, setIsReceiptModalOpen] = useState<boolean>(false)
 
   const handleVoucherModal = () => {
     setIsVoucherModalOpen(!isVoucherModalOpen)
@@ -153,6 +156,9 @@ const PointOfSalesPage: FC = () => {
       setSelectedVoucher(null)
       setIsPaymentModalOpen(false)
 
+      setLastTransactionId(transaction.id)
+      setIsReceiptModalOpen(true)
+
       toast.success('Transaksi berhasil dibuat')
     } catch (error) {
       toast.error('Gagal membuat transaksi')
@@ -182,7 +188,7 @@ const PointOfSalesPage: FC = () => {
 
   return (
     <>
-      <div className="flex flex-col xl:flex-row h-full gap-6">
+      <div className="flex flex-col xl:flex-row h-full gap-6 print:hidden">
         {/* Product Grid (Left) */}
         <div className="flex flex-col w-full h-full overflow-hidden">
           {/* Header/Filter */}
@@ -331,15 +337,6 @@ const PointOfSalesPage: FC = () => {
             </button>
           </div>
         </div>
-
-        {/* Receipt Modal */}
-        {/* {lastSale && (
-        <Receipt 
-          sale={lastSale} 
-          store={storeProfile} 
-          onClose={() => setLastSale(null)} 
-        />
-      )} */}
       </div>
 
       <VoucherModal
@@ -356,6 +353,17 @@ const PointOfSalesPage: FC = () => {
         discount={discountAmount}
         onPay={handleFinalPayment}
       />
+
+      {lastTransactionId && (
+        <ReceiptModal
+          open={isReceiptModalOpen}
+          onClose={() => {
+            setIsReceiptModalOpen(false)
+            setLastTransactionId(null)
+          }}
+          transactionId={lastTransactionId}
+        />
+      )}
     </>
   )
 }

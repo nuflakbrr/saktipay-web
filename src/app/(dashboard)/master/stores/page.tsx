@@ -7,7 +7,7 @@ import { toast } from "sonner"
 import z from "zod"
 
 import { db } from '@/lib/firebase'
-import { fetchStore, STORE_ID } from '@/services/stores'
+import { fetchStoreForm, STORE_ID } from '@/services/stores'
 import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
 import { Field, FieldError, FieldGroup, FieldLabel } from '@/components/ui/field'
@@ -50,7 +50,6 @@ const StorePage: FC = () => {
         name: data.name,
         address: data.address,
         phone: data.phone,
-        created_at: serverTimestamp(),
         updated_at: serverTimestamp(),
       })
 
@@ -61,7 +60,7 @@ const StorePage: FC = () => {
   }
 
   useEffect(() => {
-    fetchStore(form)
+    fetchStoreForm(form)
   }, [form])
 
   return (

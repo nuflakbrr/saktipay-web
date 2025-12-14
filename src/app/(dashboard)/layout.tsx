@@ -61,7 +61,7 @@ export default function Layout({ children }: Props) {
     >
       <AppSidebar />
       <SidebarInset>
-        <header className="flex items-center justify-between px-4">
+        <header className="flex items-center justify-between px-4 print:hidden">
           <div className="flex h-16 items-center gap-2 pr-4">
             <SidebarTrigger className="-ml-1" />
             <Separator orientation="vertical" className="h-4" />
