@@ -5,7 +5,7 @@ import moment from 'moment'
 import { Store } from '@/interfaces/stores'
 import { Transaction } from '@/interfaces/transactions'
 import { fetchStore } from '@/services/stores'
-import { fetchTransaction } from '@/services/transactions'
+import { fetchLastTransaction } from '@/services/transactions'
 import { Timestamp } from 'firebase/firestore'
 
 type Props = {
@@ -43,7 +43,7 @@ const ReceiptModal: FC<Props> = ({ open, onClose, transactionId }) => {
       }
     })
 
-    fetchTransaction(transactionId).then((data) => {
+    fetchLastTransaction(transactionId).then((data) => {
       if (data) {
         setTransaction(data)
       }
